@@ -1,0 +1,14 @@
+@use "../../styles/variables" as *;
+
+.slide-layout {
+  height: 530px;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: $gray-bg;
+}
+
+.slide-img {
+  height: 500px;
+  width: 400px;
+}

@@ -1,0 +1,28 @@
+.checkout-form {
+  margin-bottom: 30px;
+
+  h3 {
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+}
+
+.checkout-form__user {
+  > * {
+    margin-bottom: 16px;
+  }
+}
+
+.checkout-form__delivery-description {
+  margin-bottom: 20px;
+
+  p {
+    margin-top: 10px;
+  }
+}
+
+.checkout-form__delivery-comment {}
+
+.checkout-form__button {
+  max-width: 300px;
+}

@@ -1,0 +1,60 @@
+@use "../../styles/variables" as *;
+
+.cart-title {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.cart-main {
+}
+
+.cart-items {
+  //width: 100%;
+  flex-grow: 4;
+}
+
+.cart-item {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  //box-shadow: $shadow;
+
+  &:not(:first-child) {
+    margin-top: 20px;
+  }
+}
+
+.cart-item__left {
+  height: 160px;
+
+  .cart-item__img {
+    height: 100%;
+  }
+}
+
+.cart-item__middle {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.cart-item__right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.cart-item__delete {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+}
+
+.cart-empty {
+  text-align: center;
+}
+
+.cart-total {
+  height: fit-content;
+  flex-grow: 1;
+}

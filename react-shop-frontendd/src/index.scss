@@ -1,0 +1,151 @@
+@use "./styles/variables" as *;
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+
+  //&:before {
+  //  content: ' ';
+  //  display: block;
+  //  position: absolute;
+  //  z-index: -1;
+  //  left: 0;
+  //  top: 0;
+  //  width: 100%;
+  //  height: 100%;
+  //  opacity: 0.09;
+  //  background-image: url('./assets/images/bg-pattern-light.svg');
+  //  background-repeat: no-repeat;
+  //  background-position: 50% 0;
+  //  background-size: cover;
+  //}
+}
+
+#root {
+  //min-height: 100vh;
+  //display: grid;
+  //grid-template-rows: auto auto 1fr auto;
+}
+
+.container {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+ul, li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+h1, h2, h3 {}
+
+h1 {
+  font-weight: 500;
+  font-size: 40px;
+  margin-top: 20px !important;
+  margin-bottom: 40px !important;
+}
+
+.tab-outlet {
+  position: relative;
+  width: 100%;
+  //padding-left: 40px;
+}
+
+.text-bold {
+  font-weight: 700;
+}
+
+.bordered-box {
+  padding: 10px 20px;
+  border: 1px solid $border;
+  border-radius: $border-radius;
+  //box-shadow: $shadow;
+  background: white;
+}
+
+.header, .footer {
+  display: block !important;
+
+  button {
+    text-transform: capitalize !important;
+    min-width: unset !important;
+  }
+}
+
+.header + div {
+  padding-top: 134px;
+  padding-bottom: 104px;
+}
+
+.header-desktop + div {
+  padding-bottom: 220px;
+}
+
+.base-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.tabs {
+  min-width: 20%;
+}
+
+//.img-wrapper {
+//  overflow: hidden;
+//  position: relative;
+//  width: 100%;
+//  padding-bottom: 80%;
+//}
+//
+//.img-wrapper > div {
+//  position: absolute;
+//  top: 0;
+//  left: 0;
+//  width: 100%;
+//  height: 100%;
+//  justify-content: center;
+//  display: flex;
+//  align-items: center;
+//}
+//
+//.img-wrapper > div > img {
+//  width: 100%;
+//  height: 100%;
+//}
+
+.hidden-niger {
+  position: fixed;
+  left: calc(50% - 864px / 2);
+  top: calc(50% - 796px / 2 + 40px);
+  opacity: 0.5;
+}
+
+@media screen and (max-width: 750px) {
+  .header + div {
+    padding-top: 100px;
+    padding-bottom: 80px;
+  }
+
+  h1 {
+    font-size: 30px !important;
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
+  }
+}

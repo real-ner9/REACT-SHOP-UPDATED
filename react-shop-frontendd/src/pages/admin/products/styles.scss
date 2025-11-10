@@ -1,0 +1,16 @@
+.product-form {
+  overflow: auto;
+  padding: 10px 5px;
+  max-height: 700px;
+}
+
+.admin-product__header-toolbar {
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 750px) {
+  .product-form {
+    max-height: 400px;
+  }
+}

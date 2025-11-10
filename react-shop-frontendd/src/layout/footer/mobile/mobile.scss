@@ -1,0 +1,16 @@
+@use "../../../styles/variables" as *;
+
+.footer-mobile-content {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.footer-mobile-item {
+  &:not(:first-child) {
+    //padding-left: 1%;
+  }
+
+  &:not(:last-child) {
+    //padding-right: 1%;
+  }
+}

@@ -1,0 +1,37 @@
+.filters {
+  min-width: 30%;
+}
+
+.filters-mobile__header {
+  text-align: right;
+}
+
+.filters-form-mobile {
+  z-index: 4;
+  position: fixed;
+  top: 86px;
+  bottom: 63px;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  background: white;
+  padding: 20px;
+}
+
+.filters-form__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filters-form__reset {
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.filter-icon {
+  height: 40px;
+  width: 40px;
+}

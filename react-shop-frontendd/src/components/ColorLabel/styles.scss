@@ -1,0 +1,13 @@
+@use "../../styles/variables" as *;
+
+.color-label {
+  display: flex;
+  align-items: center;
+}
+
+.color-label__badge {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  border-radius: $border-radius;
+}
