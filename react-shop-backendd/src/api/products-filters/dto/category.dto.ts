@@ -1,4 +1,4 @@
-import { BaseFilterDto } from '@/api/products-filters/dto/base-filter.dto';
+import { BaseFilterDto } from './base-filter.dto';
 import { IsNumber } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 

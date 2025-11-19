@@ -6,10 +6,10 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Cart } from '@/api/cart/entities/cart.entity';
-import { Favorite } from '@/api/favorite/entities/favorite.entity';
-import { Order } from '@/api/orders/entities/order.entity';
-import Role from '@/api/user/role.enum';
+import { Cart } from '../../cart/entities/cart.entity';
+import { Favorite } from '../../favorite/entities/favorite.entity';
+import { Order } from '../../orders/entities/order.entity';
+import Role from '../role.enum';
 
 @Entity()
 export class User extends BaseEntity {

@@ -10,9 +10,9 @@ import {
   MinLength,
 } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { OrderStatus } from '@/api/orders/types/orderStatus';
+import { OrderStatus } from '../types/orderStatus';
 import { Type } from 'class-transformer';
-import { Cart } from '@/api/cart/entities/cart.entity';
+import { Cart } from '../../cart/entities/cart.entity';
 
 export class CreateOrderDto {
   // user

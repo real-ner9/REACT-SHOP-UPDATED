@@ -11,11 +11,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { CreateOrderDto } from '@/api/orders/dto/orders.dto';
-import { JwtAuthGuard } from '@/api/auth/auth.guard';
-import { Order } from '@/api/orders/entities/order.entity';
-import RoleGuard from '@/api/user/role.guard';
-import Role from '@/api/user/role.enum';
+import { CreateOrderDto } from './dto/orders.dto';
+import { JwtAuthGuard } from '../auth/auth.guard';
+import { Order } from './entities/order.entity';
+import RoleGuard from '../user/role.guard';
+import Role from '../user/role.enum';
 
 @Controller('orders')
 export class OrdersController {

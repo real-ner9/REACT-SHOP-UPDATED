@@ -6,9 +6,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Cart } from '@/api/cart/entities/cart.entity';
-import { Favorite } from '@/api/favorite/entities/favorite.entity';
-import LocalFile from '@/api/files/entities/local-file.entity';
+import { Cart } from '../../cart/entities/cart.entity';
+import { Favorite } from '../../favorite/entities/favorite.entity';
+import LocalFile from '../../files/entities/local-file.entity';
 
 @Entity()
 export class Product extends BaseEntity {

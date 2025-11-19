@@ -2,15 +2,15 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '@/api/user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
 import { ConfigService } from '@nestjs/config';
-import { EmailConfirmationModule } from "@/api/email-confirmation/email-confirmation.module";
+import { EmailConfirmationModule } from '../email-confirmation/email-confirmation.module';
 
 import { AuthController } from './auth.controller';
 import { AuthHelper } from './auth.helper';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './auth.strategy';
-import { UserModule } from "@/api/user/user.module";
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [

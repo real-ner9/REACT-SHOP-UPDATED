@@ -11,19 +11,19 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import RoleGuard from '@/api/user/role.guard';
-import Role from '@/api/user/role.enum';
+import RoleGuard from '../../../user/role.guard';
+import Role from '../../../user/role.enum';
 import {
   CreateCategoryDto,
   UpdateCategoryDto,
-} from '@/api/products-filters/dto/category.dto';
-import { Category } from '@/api/products-filters/entities/category.entity';
+} from '../../dto/category.dto';
+import { Category } from '../../entities/category.entity';
 import { DeleteResult } from 'typeorm/browser';
-import LocalFileInterceptor from '@/api/files/interceptors/local-file.interceptor';
-import { ExpressMulterFile } from '@/api/types/file';
-import LocalFile from '@/api/files/entities/local-file.entity';
-import { FilesService } from '@/api/files/files.service';
-import { CategoriesService } from '@/api/products-filters/services/categories/categories.service';
+import LocalFileInterceptor from '../../../files/interceptors/local-file.interceptor';
+import type { ExpressMulterFile } from '../../../types/file';
+import LocalFile from '../../../files/entities/local-file.entity';
+import { FilesService } from '../../../files/files.service';
+import { CategoriesService } from '../../services/categories/categories.service';
 
 @Controller('categories')
 export class CategoriesController {

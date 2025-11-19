@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { EmailConfirmationService } from './email-confirmation.service';
 import { EmailConfirmationController } from './email-confirmation.controller';
-import { EmailModule } from "@/api/email/email.module";
-import { JwtModule } from "@nestjs/jwt";
-import { ConfigService } from "@nestjs/config";
-import { UserModule } from "@/api/user/user.module";
+import { EmailModule } from '../email/email.module';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [

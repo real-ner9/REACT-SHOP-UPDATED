@@ -1,17 +1,17 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { CreateOrderDto, UpdateOrderDto } from '@/api/orders/dto/orders.dto';
+import { CreateOrderDto, UpdateOrderDto } from './dto/orders.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, UpdateResult } from 'typeorm';
-import { Order } from '@/api/orders/entities/order.entity';
-import { UserService } from '@/api/user/user.service';
-import { CartService } from '@/api/cart/cart.service';
-import { OrderProduct } from '@/api/orders/entities/order-product.entity';
-import { CreateOrderProduct } from '@/api/orders/types/order-product';
-import { EmailService } from '@/api/email/email.service';
+import { Order } from './entities/order.entity';
+import { UserService } from '../user/user.service';
+import { CartService } from '../cart/cart.service';
+import { OrderProduct } from './entities/order-product.entity';
+import { CreateOrderProduct } from './types/order-product';
+import { EmailService } from '../email/email.service';
 import { ConfigService } from '@nestjs/config';
 import Mail from 'nodemailer/lib/mailer';
-import { ProductsService } from '@/api/products/products.service';
-import { Cart } from '@/api/cart/entities/cart.entity';
+import { ProductsService } from '../products/products.service';
+import { Cart } from '../cart/entities/cart.entity';
 
 @Injectable()
 export class OrdersService {

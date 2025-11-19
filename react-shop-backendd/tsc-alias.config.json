@@ -1,0 +1,7 @@
+{
+  "resolveFullPaths": true,
+  "replacers": {
+    "@": "src"
+  }
+}
+

@@ -10,16 +10,16 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import RoleGuard from '@/api/user/role.guard';
-import Role from '@/api/user/role.enum';
+import RoleGuard from '../../../user/role.guard';
+import Role from '../../../user/role.enum';
 import { DeleteResult, UpdateResult } from 'typeorm';
-import { ColorsService } from '@/api/products-filters/services/colors/colors.service';
+import { ColorsService } from '../../services/colors/colors.service';
 import {
   ColorFiltersDto,
   CreateColorDto,
   UpdateColorDto,
-} from '@/api/products-filters/dto/color.dto';
-import { Color } from '@/api/products-filters/entities/color.entity';
+} from '../../dto/color.dto';
+import { Color } from '../../entities/color.entity';
 
 @Controller('colors')
 export class ColorsController {

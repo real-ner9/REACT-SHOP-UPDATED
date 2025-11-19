@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
-import { BaseFilterEntity } from '@/api/products-filters/entities/base-filter.entity';
-import LocalFile from '@/api/files/entities/local-file.entity';
+import { BaseFilterEntity } from './base-filter.entity';
+import LocalFile from '../../files/entities/local-file.entity';
 
 @Entity()
 export class Category extends BaseFilterEntity {

@@ -6,9 +6,9 @@ import {
   UseInterceptors
 } from "@nestjs/common";
 import { EmailConfirmationService } from './email-confirmation.service';
-import { ConfirmEmailDto } from "@/api/email-confirmation/dto/email-confirmation.dto";
-import { JwtAuthGuard } from "@/api/auth/auth.guard";
-import RequestWithUser from "@/api/auth/types/requestWithUser.inteface";
+import { ConfirmEmailDto } from './dto/email-confirmation.dto';
+import { JwtAuthGuard } from '../auth/auth.guard';
+import RequestWithUser from '../auth/types/requestWithUser.inteface';
 
 @Controller('email-confirmation')
 @UseInterceptors(ClassSerializerInterceptor)

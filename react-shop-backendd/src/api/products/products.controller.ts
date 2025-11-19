@@ -20,14 +20,14 @@ import {
   CreateProductDto,
   GetPriceRangeFilterDto,
   UpdateProductDto,
-} from '@/api/products/dto/products.dto';
-import { Product } from '@/api/products/entities/product.entity';
-import RoleGuard from '@/api/user/role.guard';
-import Role from '@/api/user/role.enum';
-import { ExpressMulterFile } from '@/api/types/file';
-import LocalFilesInterceptor from '@/api/files/interceptors/local-files.interceptor';
-import { FilesService } from '@/api/files/files.service';
-import LocalFile from '@/api/files/entities/local-file.entity';
+} from './dto/products.dto';
+import { Product } from './entities/product.entity';
+import RoleGuard from '../user/role.guard';
+import Role from '../user/role.enum';
+import type { ExpressMulterFile } from '../types/file';
+import LocalFilesInterceptor from '../files/interceptors/local-files.interceptor';
+import { FilesService } from '../files/files.service';
+import LocalFile from '../files/entities/local-file.entity';
 
 import { ProductsService } from './products.service';
 

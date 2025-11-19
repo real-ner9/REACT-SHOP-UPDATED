@@ -1,5 +1,5 @@
 import { FilterOperator, PaginateConfig } from 'nestjs-paginate';
-import { Product } from '@/api/products/entities/product.entity';
+import { Product } from './entities/product.entity';
 
 export const paginateConfig: PaginateConfig<Product> = {
   sortableColumns: ['id', 'price', 'created_at'],

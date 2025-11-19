@@ -10,16 +10,16 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import RoleGuard from '@/api/user/role.guard';
-import Role from '@/api/user/role.enum';
+import RoleGuard from '../../../user/role.guard';
+import Role from '../../../user/role.enum';
 import { DeleteResult, UpdateResult } from 'typeorm';
-import { BrandsService } from '@/api/products-filters/services/brands/brands.service';
+import { BrandsService } from '../../services/brands/brands.service';
 import {
   BrandFiltersDto,
   CreateBrandDto,
   UpdateBrandDto,
-} from '@/api/products-filters/dto/brand.dto';
-import { Brand } from '@/api/products-filters/entities/brand.entity';
+} from '../../dto/brand.dto';
+import { Brand } from '../../entities/brand.entity';
 
 @Controller('brands')
 export class BrandsController {

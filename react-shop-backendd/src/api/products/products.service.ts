@@ -11,16 +11,16 @@ import { DeleteResult } from 'typeorm/browser';
 
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from '@/api/products/entities/product.entity';
+import { Product } from './entities/product.entity';
 import {
   CreateProductDto,
   GetPriceRangeFilterDto,
   UpdateProductDto,
-} from '@/api/products/dto/products.dto';
-import { FilesService } from '@/api/files/files.service';
-import { CategoriesService } from '@/api/products-filters/services/categories/categories.service';
-import { BrandsService } from '@/api/products-filters/services/brands/brands.service';
-import { paginateConfig } from '@/api/products/paginate-config';
+} from './dto/products.dto';
+import { FilesService } from '../files/files.service';
+import { CategoriesService } from '../products-filters/services/categories/categories.service';
+import { BrandsService } from '../products-filters/services/brands/brands.service';
+import { paginateConfig } from './paginate-config';
 
 @Injectable()
 export class ProductsService {

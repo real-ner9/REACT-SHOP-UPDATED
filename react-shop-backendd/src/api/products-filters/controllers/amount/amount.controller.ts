@@ -10,16 +10,16 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import RoleGuard from '@/api/user/role.guard';
-import Role from '@/api/user/role.enum';
+import RoleGuard from '../../../user/role.guard';
+import Role from '../../../user/role.enum';
 import { DeleteResult, UpdateResult } from 'typeorm';
-import { AmountService } from '@/api/products-filters/services/amount/amount.service';
+import { AmountService } from '../../services/amount/amount.service';
 import {
   AmountFiltersDto,
   CreateAmountDto,
   UpdateAmountDto,
-} from '@/api/products-filters/dto/amount.dto';
-import { Amount } from '@/api/products-filters/entities/amount.entity';
+} from '../../dto/amount.dto';
+import { Amount } from '../../entities/amount.entity';
 
 @Controller('amount')
 export class AmountController {

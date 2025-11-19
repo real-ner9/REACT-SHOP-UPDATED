@@ -5,6 +5,7 @@ import configuration from './config/configuration';
 import databaseConfig from './config/database.config';
 import { environmentValidationSchema } from './config/env.validation';
 import { DatabaseModule } from './database/database.module';
+import { ApiModule } from './api/api.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { DatabaseModule } from './database/database.module';
       },
     }),
     DatabaseModule,
+    ApiModule,
   ],
 })
 export class AppModule {}

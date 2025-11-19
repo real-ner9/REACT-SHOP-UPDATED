@@ -1,4 +1,4 @@
-import { Cart } from '@/api/cart/entities/cart.entity';
+import { Cart } from '../entities/cart.entity';
 
 export type CartResponse = {
   totalPrice: number;

@@ -2,11 +2,11 @@ import { Repository } from 'typeorm';
 
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '@/api/user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
 
 import { LoginDto, RegisterDto } from './dto/auth.dto';
 import { AuthHelper } from './auth.helper';
-import { UserService } from '@/api/user/user.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +19,9 @@ export class AuthService {
   public async register(body: RegisterDto): Promise<User | never> {
     const { name, email, password }: RegisterDto = body;
     const existingUser = await this.userRepository.findOne({ where: { email } });
+
+    console.log(existingUser);
+    console.log(body)
 
     if (existingUser) {
       throw new HttpException(

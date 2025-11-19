@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "@/api/user/entities/user.entity";
-import { Product } from "@/api/products/entities/product.entity";
+import { User } from '../../user/entities/user.entity';
+import { Product } from '../../products/entities/product.entity';
 
 @Entity()
 export class Favorite extends BaseEntity {

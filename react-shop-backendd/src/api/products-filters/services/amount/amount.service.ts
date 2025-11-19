@@ -1,11 +1,11 @@
 import { ArrayContains, DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Amount } from '@/api/products-filters/entities/amount.entity';
+import { Amount } from '../../entities/amount.entity';
 import {
   CreateAmountDto,
   UpdateAmountDto,
-} from '@/api/products-filters/dto/amount.dto';
+} from '../../dto/amount.dto';
 
 @Injectable()
 export class AmountService {

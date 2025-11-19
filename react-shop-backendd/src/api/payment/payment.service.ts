@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   CreatePaymentDto,
   GetPaymentStatusDto,
-} from '@/api/payment/dto/payment.dto';
+} from './dto/payment.dto';
 import {
   ICapturePayment,
   ICreatePayment,
@@ -11,9 +11,9 @@ import {
 } from '@a2seven/yoo-checkout';
 import { ConfigService } from '@nestjs/config';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { OrdersService } from '@/api/orders/orders.service';
+import { OrdersService } from '../orders/orders.service';
 import { Payment } from '@a2seven/yoo-checkout/build/models';
-import { EmailService } from '@/api/email/email.service';
+import { EmailService } from '../email/email.service';
 
 @Injectable()
 export class PaymentService {
@@ -28,8 +28,8 @@ export class PaymentService {
     private readonly ordersService: OrdersService,
   ) {
     this.checkout = new YooCheckout({
-      shopId: this.configService.get<string>('SHOP_ID') ?? '',
-      secretKey: this.configService.get<string>('PAYMENT_TOKEN') ?? '',
+      shopId: this.configService.get<string>('YOOKASSA_SHOP_ID') ?? '',
+      secretKey: this.configService.get<string>('YOOKASSA_SECRET_KEY') ?? '',
     });
   }
 

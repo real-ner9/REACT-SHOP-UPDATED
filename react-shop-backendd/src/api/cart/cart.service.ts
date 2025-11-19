@@ -6,13 +6,13 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Cart } from '@/api/cart/entities/cart.entity';
+import { Cart } from './entities/cart.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProductsService } from '@/api/products/products.service';
-import { UserService } from '@/api/user/user.service';
-import { AddToCartDto } from '@/api/cart/dto/cart.dto';
+import { ProductsService } from '../products/products.service';
+import { UserService } from '../user/user.service';
+import { AddToCartDto } from './dto/cart.dto';
 import { DeleteResult } from 'typeorm/query-builder/result/DeleteResult';
-import { CartResponse } from '@/api/cart/types/types';
+import { CartResponse } from './types/types';
 
 @Injectable()
 export class CartService {

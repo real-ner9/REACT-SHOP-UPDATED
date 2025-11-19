@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Category } from '@/api/products-filters/entities/category.entity';
+import { Category } from '../../entities/category.entity';
 import {
   CreateCategoryDto,
   UpdateCategoryDto,
-} from '@/api/products-filters/dto/category.dto';
+} from '../../dto/category.dto';
 import { DeleteResult } from 'typeorm/browser';
-import { FilesService } from '@/api/files/files.service';
+import { FilesService } from '../../../files/files.service';
 
 @Injectable()
 export class CategoriesService {

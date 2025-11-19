@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { EmailService } from '@/api/email/email.service';
-import { SendFeedbackDto } from '@/api/feedback/dto/send-email.dto';
+import { EmailService } from '../email/email.service';
+import { SendFeedbackDto } from './dto/send-email.dto';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()

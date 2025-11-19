@@ -9,7 +9,12 @@
     "build": "nest build && tsc-alias -p tsconfig.build.json",
     "start": "nest start",
     "start:dev": "node -r ts-node/register -r tsconfig-paths/register ./node_modules/@nestjs/cli/bin/nest.js start --watch",
-    "start:prod": "node dist/main"
+    "start:prod": "node dist/main",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f postgres",
+    "docker:restart": "docker compose restart postgres",
+    "docker:pgadmin": "echo 'pgAdmin доступен на http://localhost:5050'"
   },
   "dependencies": {
     "@a2seven/yoo-checkout": "^1.1.4",

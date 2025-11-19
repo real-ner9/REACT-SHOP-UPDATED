@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '@/api/user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class AuthHelper {

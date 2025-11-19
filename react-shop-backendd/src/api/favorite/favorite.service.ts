@@ -3,10 +3,10 @@ import { DeleteResult } from 'typeorm/query-builder/result/DeleteResult';
 
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Favorite } from '@/api/favorite/entities/favorite.entity';
-import { AddToFavoriteDto } from '@/api/favorite/dto/favorite.dto';
-import { ProductsService } from '@/api/products/products.service';
-import { UserService } from '@/api/user/user.service';
+import { Favorite } from './entities/favorite.entity';
+import { AddToFavoriteDto } from './dto/favorite.dto';
+import { ProductsService } from '../products/products.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class FavoriteService {

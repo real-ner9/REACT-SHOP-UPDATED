@@ -13,7 +13,7 @@ import {
   Param,
   ParseIntPipe
 } from "@nestjs/common";
-import { JwtAuthGuard } from "@/api/auth/auth.guard";
+import { JwtAuthGuard } from '../auth/auth.guard';
 
 import { UpdateNameDto } from "./dto/user.dto";
 import { User } from './entities/user.entity';

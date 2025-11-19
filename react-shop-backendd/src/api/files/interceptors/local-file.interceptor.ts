@@ -4,7 +4,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Injectable, mixin, NestInterceptor, Type } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
-import { BaseFileInterceptorOptions } from '@/api/files/interceptors/types';
+import { BaseFileInterceptorOptions } from './types';
 
 function LocalFileInterceptor(
   options: BaseFileInterceptorOptions,

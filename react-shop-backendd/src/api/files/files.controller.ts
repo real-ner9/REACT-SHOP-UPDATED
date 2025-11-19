@@ -12,8 +12,8 @@ import { FilesService } from './files.service';
 import { Response } from 'express';
 import { createReadStream } from 'fs';
 import { join } from 'path';
-import RoleGuard from '@/api/user/role.guard';
-import Role from '@/api/user/role.enum';
+import RoleGuard from '../user/role.guard';
+import Role from '../user/role.enum';
 
 @Controller('files')
 export class FilesController {

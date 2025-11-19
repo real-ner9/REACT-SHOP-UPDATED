@@ -13,13 +13,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { SliderService } from './slider.service';
-import { CreateSlideDto, UpdateSlideDto } from '@/api/slider/dto/slider.dto';
-import { ExpressMulterFile } from '@/api/types/file';
-import RoleGuard from '@/api/user/role.guard';
-import Role from '@/api/user/role.enum';
-import LocalFileInterceptor from '@/api/files/interceptors/local-file.interceptor';
-import { FilesService } from '@/api/files/files.service';
-import LocalFile from '@/api/files/entities/local-file.entity';
+import { CreateSlideDto, UpdateSlideDto } from './dto/slider.dto';
+import type { ExpressMulterFile } from '../types/file';
+import RoleGuard from '../user/role.guard';
+import Role from '../user/role.enum';
+import LocalFileInterceptor from '../files/interceptors/local-file.interceptor';
+import { FilesService } from '../files/files.service';
+import LocalFile from '../files/entities/local-file.entity';
 
 @Controller('slider')
 export class SliderController {

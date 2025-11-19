@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ArrayContains, DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { Brand } from '@/api/products-filters/entities/brand.entity';
+import { Brand } from '../../entities/brand.entity';
 import {
   CreateBrandDto,
   UpdateBrandDto,
-} from '@/api/products-filters/dto/brand.dto';
+} from '../../dto/brand.dto';
 
 @Injectable()
 export class BrandsService {

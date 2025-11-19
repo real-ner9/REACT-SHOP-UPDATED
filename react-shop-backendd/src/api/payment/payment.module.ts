@@ -1,8 +1,8 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { PaymentController } from './payment.controller';
-import { OrdersModule } from '@/api/orders/orders.module';
-import { EmailModule } from '@/api/email/email.module';
+import { OrdersModule } from '../orders/orders.module';
+import { EmailModule } from '../email/email.module';
 
 @Module({
   imports: [forwardRef(() => OrdersModule), EmailModule],

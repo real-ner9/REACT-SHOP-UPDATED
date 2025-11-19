@@ -6,7 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import LocalFile from '@/api/files/entities/local-file.entity';
+import LocalFile from '../../files/entities/local-file.entity';
 
 @Entity()
 export class Slide extends BaseEntity {

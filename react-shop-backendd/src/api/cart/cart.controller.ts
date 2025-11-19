@@ -9,14 +9,14 @@ import {
   UseGuards,
   Inject,
 } from '@nestjs/common';
-import { AddToCartDto } from '@/api/cart/dto/cart.dto';
+import { AddToCartDto } from './dto/cart.dto';
 
 import { CartService } from './cart.service';
-import { Cart } from '@/api/cart/entities/cart.entity';
+import { Cart } from './entities/cart.entity';
 import { DeleteResult } from 'typeorm/query-builder/result/DeleteResult';
-import { JwtAuthGuard } from '@/api/auth/auth.guard';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { UpdateResult } from 'typeorm';
-import { CartResponse } from '@/api/cart/types/types';
+import { CartResponse } from './types/types';
 
 @Controller('cart')
 export class CartController {

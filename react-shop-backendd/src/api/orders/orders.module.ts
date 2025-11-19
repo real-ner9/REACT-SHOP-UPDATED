@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { OrdersController } from './orders.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Order } from '@/api/orders/entities/order.entity';
-import { UserModule } from '@/api/user/user.module';
-import { CartModule } from '@/api/cart/cart.module';
-import { OrderProduct } from '@/api/orders/entities/order-product.entity';
-import { EmailModule } from '@/api/email/email.module';
-import { ProductsModule } from '@/api/products/products.module';
+import { Order } from './entities/order.entity';
+import { UserModule } from '../user/user.module';
+import { CartModule } from '../cart/cart.module';
+import { OrderProduct } from './entities/order-product.entity';
+import { EmailModule } from '../email/email.module';
+import { ProductsModule } from '../products/products.module';
 
 @Module({
   imports: [

@@ -8,9 +8,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '@/api/user/entities/user.entity';
-import { OrderProduct } from '@/api/orders/entities/order-product.entity';
-import { OrderStatus } from '@/api/orders/types/orderStatus';
+import { User } from '../../user/entities/user.entity';
+import { OrderProduct } from './order-product.entity';
+import { OrderStatus } from '../types/orderStatus';
 
 @Entity()
 export class Order extends BaseEntity {

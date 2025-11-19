@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ArrayContains, DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { Color } from '@/api/products-filters/entities/color.entity';
+import { Color } from '../../entities/color.entity';
 import {
   CreateColorDto,
   UpdateColorDto,
-} from '@/api/products-filters/dto/color.dto';
+} from '../../dto/color.dto';
 
 @Injectable()
 export class ColorsService {

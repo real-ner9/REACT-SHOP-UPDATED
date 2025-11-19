@@ -11,9 +11,9 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { AddToFavoriteDto } from '@/api/favorite/dto/favorite.dto';
-import { Favorite } from '@/api/favorite/entities/favorite.entity';
-import { JwtAuthGuard } from '@/api/auth/auth.guard';
+import { AddToFavoriteDto } from './dto/favorite.dto';
+import { Favorite } from './entities/favorite.entity';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { DeleteResult } from 'typeorm/query-builder/result/DeleteResult';
 
 import { FavoriteService } from './favorite.service';

@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Repository, UpdateResult } from 'typeorm';
-import { Slide } from '@/api/slider/entities/slide.entity';
+import { Slide } from './entities/slide.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FilesService } from '@/api/files/files.service';
-import { CreateSlideDto, UpdateSlideDto } from '@/api/slider/dto/slider.dto';
+import { FilesService } from '../files/files.service';
+import { CreateSlideDto, UpdateSlideDto } from './dto/slider.dto';
 
 @Injectable()
 export class SliderService {

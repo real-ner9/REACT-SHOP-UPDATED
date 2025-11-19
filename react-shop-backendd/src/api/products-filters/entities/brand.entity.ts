@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
-import { BaseFilterEntity } from '@/api/products-filters/entities/base-filter.entity';
-import { Category } from '@/api/products-filters/entities/category.entity';
+import { BaseFilterEntity } from './base-filter.entity';
+import { Category } from './category.entity';
 
 @Entity()
 export class Brand extends BaseFilterEntity {
