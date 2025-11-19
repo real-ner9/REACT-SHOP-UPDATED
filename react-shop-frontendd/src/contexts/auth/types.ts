@@ -14,20 +14,30 @@ export type RegisterPayload = LoginPayload & {
   name?: string
 }
 
-export type Register = (payload: RegisterPayload) => Promise<any>
+export type RegisterResponse = {
+  message?: string
+}
+
+export type Register = (payload: RegisterPayload) => Promise<RegisterResponse>
 
 export type LoginPayload = {
   email: string
   password: string
 }
 
-export type Login = (payload: LoginPayload) => Promise<any>
+export type LoginResponse = string
 
-export type SendConfirmationLink = (token: string) => Promise<any>
+export type Login = (payload: LoginPayload) => Promise<LoginResponse>
+
+export type SendConfirmationLinkResponse = {
+  message?: string
+}
+
+export type SendConfirmationLink = (token: string) => Promise<SendConfirmationLinkResponse>
 
 export type Logout = () => void
 
-export type GetUser = (id: number) => Promise<any>
+export type GetUser = (id: number) => Promise<User>
 
 export type AuthContextProps = {
   login: Login

@@ -9,9 +9,19 @@ export type CreateCategoryPayload = BaseFilterPayload & {
 
 export type EditCategoryPayload = Partial<CreateCategoryPayload>
 
-export type CreateCategory = (payload: CreateCategoryPayload) => Promise<any>
+export type CreateCategoryResponse = {
+  category: Category
+  message?: string
+}
 
-export type EditCategory = (id: number, payload: EditCategoryPayload) => Promise<any>
+export type CreateCategory = (payload: CreateCategoryPayload) => Promise<CreateCategoryResponse>
+
+export type EditCategoryResponse = {
+  category: Category
+  message?: string
+}
+
+export type EditCategory = (id: number, payload: EditCategoryPayload) => Promise<EditCategoryResponse>
 
 export type CategoriesContextProps = {
   getCategories: BaseGetFilters

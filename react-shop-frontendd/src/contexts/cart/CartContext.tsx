@@ -1,4 +1,4 @@
-import React, { type ReactNode, useContext, useEffect, useState } from 'react'
+import React, { type ReactNode, useContext, useEffect, useState, useCallback, useMemo } from 'react'
 import axios from 'axios'
 
 import type {
@@ -11,9 +11,11 @@ import type {
   DeleteFromLocalCart,
   FindCartItemByProductId,
   GetLocalCartItems,
-} from './types';import { requestUrl } from '../../env'
+} from './types'
+import { requestUrl } from '../../env'
 import { local } from '../../App'
 import { useAuth } from '../auth/AuthContext'
+import { useErrorHandler } from '../../hooks/useErrorHandler'
 
 const CartContext = React.createContext<CartContextProps>({} as CartContextProps)
 
@@ -25,85 +27,153 @@ type Props = {
 
 export const CartProvider: React.FC<Props> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [cart, setCart] = useState<Cart>({} as Cart)
+  const [cart, setCart] = useState<Cart>({
+    items: [],
+    totalPrice: 0,
+    totalProductsCount: 0,
+  })
 
   const { isUserExist, setUser, user } = useAuth()
+  const handleError = useErrorHandler({ showAlert: false })
 
-  const findCartItemByProductId: FindCartItemByProductId = (product_id) => {
+  const findCartItemByProductId: FindCartItemByProductId = useCallback((product_id) => {
     return cart.items?.find(cartItem => cartItem.product.id === product_id)
-  }
+  }, [cart.items])
 
-  const getCartItems = (user_id: number) => {
+  const getCartItems = useCallback((user_id: number) => {
     setLoading(true)
     return axios.get<Cart>(`${requestUrl}/cart/${user_id}`)
       .then((response) => {
         setCart(response.data)
       })
+      .catch((error) => {
+        handleError(error, 'Не удалось загрузить корзину')
+      })
       .finally(() => {
         setLoading(false)
       })
-  }
+  }, [handleError])
 
-  const addToCart: AddToCart = ({ user_id, ...payload }) => {
-    return axios.put(`${requestUrl}/cart/${user_id}`, payload).then(({ data }) => {
+  const addToCart: AddToCart = useCallback(({ user_id, ...payload }) => {
+    return axios.put(`${requestUrl}/cart/${user_id}`, payload)
+      .then(({ data }) => {
       setCart(data)
     })
-  }
+      .catch((error) => {
+        handleError(error, 'Не удалось добавить товар в корзину')
+        throw error
+      })
+  }, [handleError])
 
-  const deleteFromCart: DeleteFromCart = (id) => axios.delete(`${requestUrl}/cart/${id}`)
+  const deleteFromCart: DeleteFromCart = useCallback((id) => {
+    return axios.delete(`${requestUrl}/cart/${id}`)
+      .then(() => {
+        setCart(prevCart => ({
+          ...prevCart,
+          items: prevCart.items.filter(item => item.id !== id),
+          totalPrice: prevCart.items
+            .filter(item => item.id !== id)
+            .reduce((sum, item) => sum + item.price, 0),
+          totalProductsCount: prevCart.items
+            .filter(item => item.id !== id)
+            .reduce((sum, item) => sum + item.count, 0),
+        }))
+      })
+      .catch((error) => {
+        handleError(error, 'Не удалось удалить товар из корзины')
+        throw error
+      })
+  }, [handleError])
 
-  const getLocalCartItems: GetLocalCartItems = () => {
+  const getLocalCartItems: GetLocalCartItems = useCallback(() => {
     const localCartStr = local.getItem('cart')
 
-    if (localCartStr) {
-      const { items }: Cart = JSON.parse(localCartStr)
-
-      if (!items.length) {
-        local.removeItem('cart')
-        setUser({
-          ...user,
-          cart: [],
-        })
-        setCart({} as Cart)
-      }
-
-      setUser({
-        ...user,
-        cart: items,
-      })
-
+    if (!localCartStr) {
       setCart({
-        items,
-        totalPrice: items.reduce((p, c) => p + c.price, 0),
-        totalProductsCount: items.reduce((p, c) => p + c.count, 0),
+        items: [],
+        totalPrice: 0,
+        totalProductsCount: 0,
       })
-    }
-  }
-
-  const addToLocalCart: AddToLocalCart = async ({ count, product }) => {
-    const duplicatedCartItem = cart.items?.find(item => item.product.id === product.id)
-
-    if (count > product.count) {
       return
     }
 
-    if (duplicatedCartItem) {
-      if (count === 0) {
-        local.setItem('cart', JSON.stringify({
-          ...cart,
-          items: cart.items.filter(item => item.id !== duplicatedCartItem.id),
+    try {
+      const parsedCart: Cart = JSON.parse(localCartStr)
+
+      if (!parsedCart.items || !Array.isArray(parsedCart.items) || parsedCart.items.length === 0) {
+        local.removeItem('cart')
+        setUser(prevUser => ({
+          ...prevUser,
+          cart: [],
         }))
-
-        return getLocalCartItems()
-      }
-
-      if (count === duplicatedCartItem.count) {
+        setCart({
+          items: [],
+          totalPrice: 0,
+          totalProductsCount: 0,
+        })
         return
       }
 
-      local.setItem('cart', JSON.stringify({
-        ...cart,
-        items: cart.items.map(item => {
+      const validItems = parsedCart.items.filter(item => 
+        item && item.product && item.id && item.count > 0
+      )
+
+      if (validItems.length === 0) {
+        local.removeItem('cart')
+        setCart({
+          items: [],
+          totalPrice: 0,
+          totalProductsCount: 0,
+        })
+        return
+      }
+
+      setUser(prevUser => ({
+        ...prevUser,
+        cart: validItems,
+      }))
+
+      setCart({
+        items: validItems,
+        totalPrice: validItems.reduce((sum, item) => sum + item.price, 0),
+        totalProductsCount: validItems.reduce((sum, item) => sum + item.count, 0),
+      })
+    } catch (error) {
+      local.removeItem('cart')
+      setCart({
+        items: [],
+        totalPrice: 0,
+        totalProductsCount: 0,
+      })
+    }
+  }, [setUser])
+
+  const addToLocalCart: AddToLocalCart = useCallback(({ count, product }) => {
+    if (count > product.count || count < 0) {
+      return
+    }
+
+    setCart(prevCart => {
+      const currentItems = prevCart.items || []
+      const duplicatedCartItem = currentItems.find(item => item.product.id === product.id)
+
+    if (duplicatedCartItem) {
+      if (count === 0) {
+          const updatedItems = currentItems.filter(item => item.id !== duplicatedCartItem.id)
+          const updatedCart = {
+            items: updatedItems,
+            totalPrice: updatedItems.reduce((sum, item) => sum + item.price, 0),
+            totalProductsCount: updatedItems.reduce((sum, item) => sum + item.count, 0),
+          }
+          local.setItem('cart', JSON.stringify(updatedCart))
+          return updatedCart
+      }
+
+      if (count === duplicatedCartItem.count) {
+          return prevCart
+      }
+
+        const updatedItems = currentItems.map(item => {
           if (item.id === duplicatedCartItem.id) {
             return {
               ...item,
@@ -112,13 +182,18 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
             }
           }
           return item
-        }),
-      }))
+        })
 
-      return getLocalCartItems()
-    } else {
-      const id = new Date().getUTCMilliseconds()
+        const updatedCart = {
+          items: updatedItems,
+          totalPrice: updatedItems.reduce((sum, item) => sum + item.price, 0),
+          totalProductsCount: updatedItems.reduce((sum, item) => sum + item.count, 0),
+        }
+        local.setItem('cart', JSON.stringify(updatedCart))
+        return updatedCart
+      }
 
+      const id = Date.now() + Math.random()
       const cartItem: CartItem = {
         id,
         count,
@@ -126,37 +201,39 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
         price: product.price * count,
       }
 
-      const cartItems = cart.items || []
+      const updatedItems = [cartItem, ...currentItems]
+      const updatedCart = {
+        items: updatedItems,
+        totalPrice: updatedItems.reduce((sum, item) => sum + item.price, 0),
+        totalProductsCount: updatedItems.reduce((sum, item) => sum + item.count, 0),
+      }
+      local.setItem('cart', JSON.stringify(updatedCart))
+      return updatedCart
+    })
+  }, [])
 
-      cartItems.unshift(cartItem)
-
-      local.setItem('cart', JSON.stringify({
-        ...cart,
-        items: cartItems,
-      }))
-
-      return getLocalCartItems()
-    }
-  }
-
-  const deleteFromLocalCart: DeleteFromLocalCart = (id) => {
-    local.setItem('cart', JSON.stringify({
-      ...cart,
-      items: cart.items.filter(item => item.id !== id),
-    }))
-
-    getLocalCartItems()
-  }
+  const deleteFromLocalCart: DeleteFromLocalCart = useCallback((id) => {
+    setCart(prevCart => {
+      const updatedItems = prevCart.items.filter(item => item.id !== id)
+      const updatedCart = {
+        items: updatedItems,
+        totalPrice: updatedItems.reduce((sum, item) => sum + item.price, 0),
+        totalProductsCount: updatedItems.reduce((sum, item) => sum + item.count, 0),
+      }
+      local.setItem('cart', JSON.stringify(updatedCart))
+      return updatedCart
+    })
+  }, [])
 
   useEffect(() => {
     if (!isUserExist) {
       getLocalCartItems()
-    } else {
+    } else if (user.id) {
       getCartItems(user.id)
     }
-  }, [isUserExist])
+  }, [isUserExist, user.id, getLocalCartItems, getCartItems])
 
-  const value = {
+  const value = useMemo<CartContextProps>(() => ({
     cart,
     getCartItems,
     addToCart,
@@ -166,7 +243,17 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
     deleteFromLocalCart,
     findCartItemByProductId,
     loading,
-  }
+  }), [
+    cart,
+    getCartItems,
+    addToCart,
+    deleteFromCart,
+    getLocalCartItems,
+    addToLocalCart,
+    deleteFromLocalCart,
+    findCartItemByProductId,
+    loading,
+  ])
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }

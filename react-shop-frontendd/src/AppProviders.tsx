@@ -1,4 +1,6 @@
-import React, { type ReactNode } from 'react'
+import React, { type ReactNode, useMemo } from 'react'
+import { createTheme, ThemeProvider } from '@mui/material'
+
 import { AlertProvider } from './contexts/alert/AlertContext'
 import { AuthProvider } from './contexts/auth/AuthContext'
 import { ProductsProvider } from './contexts/products/ProductsContext'
@@ -12,8 +14,8 @@ import { CategoriesProvider } from './contexts/productsFilters/CategoriesContext
 import { BrandsProvider } from './contexts/productsFilters/BrandsContext/BrandsContext'
 import { ColorsProvider } from './contexts/productsFilters/ColorsContext/ColorsContext'
 import { AmountProvider } from './contexts/productsFilters/AmountContext/AmountContext'
-import { createTheme, ThemeProvider } from '@mui/material'
 import { FeedbackProvider } from './contexts/feedback/FeedbackContext'
+import { ProvidersComposer } from './components/Providers/ProvidersComposer'
 
 type Props = {
   children: ReactNode
@@ -31,37 +33,32 @@ const theme = createTheme({
 })
 
 const AppProviders: React.FC<Props> = ({ children }) => {
+  const providers = useMemo(
+    () => [
+      ThemeProvider,
+      AlertProvider,
+      AuthProvider,
+      ProductsProvider,
+      CartProvider,
+      OrdersProvider,
+      PaymentProvider,
+      FavoriteProvider,
+      SliderProvider,
+      FilesProvider,
+      CategoriesProvider,
+      BrandsProvider,
+      ColorsProvider,
+      AmountProvider,
+      FeedbackProvider,
+    ],
+    []
+  )
+
   return (
     <ThemeProvider theme={theme}>
-      <AlertProvider>
-        <AuthProvider>
-          <ProductsProvider>
-            <CartProvider>
-              <OrdersProvider>
-                <PaymentProvider>
-                  <FavoriteProvider>
-                    <SliderProvider>
-                      <FilesProvider>
-                        <CategoriesProvider>
-                          <BrandsProvider>
-                            <ColorsProvider>
-                              <AmountProvider>
-                                <FeedbackProvider>
+      <ProvidersComposer providers={providers.slice(1)}>
                                   {children}
-                                </FeedbackProvider>
-                              </AmountProvider>
-                            </ColorsProvider>
-                          </BrandsProvider>
-                        </CategoriesProvider>
-                      </FilesProvider>
-                    </SliderProvider>
-                  </FavoriteProvider>
-                </PaymentProvider>
-              </OrdersProvider>
-            </CartProvider>
-          </ProductsProvider>
-        </AuthProvider>
-      </AlertProvider>
+      </ProvidersComposer>
     </ThemeProvider>
   )
 }

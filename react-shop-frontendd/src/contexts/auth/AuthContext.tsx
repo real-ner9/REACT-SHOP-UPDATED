@@ -1,14 +1,13 @@
-import React, {type ReactNode, useContext, useEffect, useState} from 'react'
+import React, {type ReactNode, useContext, useEffect, useState, useCallback, useMemo} from 'react'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
-import {jwtDecode} from 'jwt-decode'
 
 import type {AuthContextProps, GetUser, Login, Register, SendConfirmationLink, User} from './types'
 import {setTokenToHeaders} from '../../helpers/setTokenToHeaders'
 import {requestUrl, tokenKey} from '../../env'
 import {local} from '../../App'
-import {formatError} from '../../helpers/formatters/formatError'
-import {useAlert} from '../alert/AlertContext'
+import {useErrorHandler} from '../../hooks/useErrorHandler'
+import {validateToken, getTokenUser} from '../../utils/tokenUtils'
 
 const AuthContext = React.createContext<AuthContextProps>({} as AuthContextProps)
 
@@ -23,47 +22,61 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
   const [isUserExist, setIsUserExist] = useState<boolean>(false);
 
   const navigate = useNavigate();
-  const {showAlert} = useAlert();
+  const handleError = useErrorHandler();
 
-  const register: Register = (payload) =>
-    axios
-      .post<User>(`${requestUrl}/auth/register`, payload)
+  const getUser: GetUser = useCallback((id: number) => {
+    return axios
+      .get<User>(`${requestUrl}/user/${id}`)
+      .then(({data}) => {
+        setUser(data);
+      })
+      .catch((error) => {
+        handleError(error, 'Не удалось загрузить данные пользователя');
+      });
+  }, [handleError]);
+
+  const register: Register = useCallback((payload) => {
+    return axios
+      .post(`${requestUrl}/auth/register`, payload)
       .then(() => {
         navigate("/login");
       })
       .catch((error) => {
-        console.log(error);
-        const message = formatError(error);
-
-        showAlert({text: message, severity: "error"});
+        handleError(error);
       });
+  }, [navigate, handleError]);
 
-  const login: Login = (payload) => axios.post<string>(`${requestUrl}/auth/login`, payload)
+  const login: Login = useCallback((payload) => {
+    return axios.post<string>(`${requestUrl}/auth/login`, payload)
     .then(({data}) => {
-      local.setItem(tokenKey, data)
-      setTokenToHeaders(data)
-      const user: User = jwtDecode(data);
-      getUser(user.id)
-        .then(() => {
-          setIsUserExist(true)
-        })
-      navigate('/')
+        if (!validateToken(data)) {
+          throw new Error('Токен недействителен');
+        }
+
+        local.setItem(tokenKey, data);
+        setTokenToHeaders(data);
+        const tokenUser = getTokenUser(data);
+        
+        return getUser(tokenUser.id).then(() => {
+          setIsUserExist(true);
+          navigate('/');
+        });
     })
-    .catch(error => {
-      const message = formatError(error)
+      .catch((error) => {
+        handleError(error);
+        throw error;
+      });
+  }, [getUser, navigate, handleError]);
 
-      showAlert({text: message, severity: "error"});
-    });
-
-  const logout = () => {
+  const logout = useCallback(() => {
     local.removeItem(tokenKey);
     setTokenToHeaders(undefined);
     setIsUserExist(false);
     setUser({} as User);
     navigate("/login");
-  };
+  }, [navigate]);
 
-  const sendConfirmationLink: SendConfirmationLink = (token: string) => {
+  const sendConfirmationLink: SendConfirmationLink = useCallback((token: string) => {
     return axios
       .post(`${requestUrl}/email-confirmation/confirm`, {
         token,
@@ -71,46 +84,41 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
       .then(() => {
         navigate("/login");
       })
-      .catch((err) => console.log(err));
-  };
-
-  const resendConfirmationLink = () =>
-    axios
-      .post(`${requestUrl}/email-confirmation/resend-confirmation-link`)
-      .catch((err) => console.log(err));
-
-  const refresh = () => {
-    return axios.post(`${requestUrl}/auth/refresh`).catch((error) => {
-      console.log(error);
-    });
-  };
-
-  const getUser: GetUser = (id: number) => {
-    return axios
-      .get<User>(`${requestUrl}/user/${id}`)
-      .then(({data}) => {
-        setUser(data);
-      })
       .catch((error) => {
-        console.log(error);
+        handleError(error, 'Не удалось подтвердить email');
       });
-  };
+  }, [navigate, handleError]);
+
+  const resendConfirmationLink = useCallback(() => {
+    return axios
+      .post(`${requestUrl}/email-confirmation/resend-confirmation-link`)
+      .catch((error) => {
+        handleError(error, 'Не удалось отправить письмо подтверждения');
+      });
+  }, [handleError]);
 
   useEffect(() => {
     const token = local.getItem(tokenKey);
 
-    if (!token) return;
+    if (!token || !validateToken(token)) {
+      if (token) {
+        local.removeItem(tokenKey);
+        setTokenToHeaders(undefined);
+      }
+      return;
+    }
 
     setTokenToHeaders(token);
+    const tokenUser = getTokenUser(token);
 
-    const user: User = jwtDecode(token);
-
-    getUser(user.id).then(() => {
+    getUser(tokenUser.id).then(() => {
       setIsUserExist(true);
+    }).catch(() => {
+      setIsUserExist(false);
     });
-  }, []);
+  }, [getUser]);
 
-  const value = {
+  const value = useMemo<AuthContextProps>(() => ({
     register,
     login,
     sendConfirmationLink,
@@ -120,7 +128,16 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
     logout,
     getUser,
     isUserExist,
-  };
+  }), [
+    register,
+    login,
+    sendConfirmationLink,
+    resendConfirmationLink,
+    user,
+    logout,
+    getUser,
+    isUserExist,
+  ]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

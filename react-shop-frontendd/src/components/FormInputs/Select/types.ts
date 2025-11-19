@@ -10,7 +10,9 @@ export type OptionIcon = (option: Option) => ReactElement
 export type Option = {
   id: number
   name: string
-  [key: string]: any
+  value?: string | number
+  color?: string
+  [key: string]: string | number | undefined
 }
 
 export type BaseFormInputSelectProps = {

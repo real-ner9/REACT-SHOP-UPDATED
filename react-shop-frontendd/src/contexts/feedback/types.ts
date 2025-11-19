@@ -4,7 +4,11 @@ export type SendFeedbackPayload = {
   comment?: string
 }
 
-export type SendFeedback = (payload: SendFeedbackPayload) => Promise<any>
+export type SendFeedbackResponse = {
+  message?: string
+}
+
+export type SendFeedback = (payload: SendFeedbackPayload) => Promise<SendFeedbackResponse>
 
 export type FeedbackContextProps = {
   sendFeedback: SendFeedback

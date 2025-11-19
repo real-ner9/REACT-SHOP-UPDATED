@@ -24,8 +24,8 @@ export type ProductsMeta = {
   totalItems: number;
   currentPage: number;
   totalPages: number;
-  sortBy: any;
-  searchBy: any;
+  sortBy: string | null;
+  searchBy: string | null;
   search: string;
   filter?: ProductsFilter;
 }
@@ -70,20 +70,38 @@ export type CreateProductPayload = {
   description?: string
 }
 
-export type CreateProduct = (payload: CreateProductPayload) => Promise<any>
+export type CreateProductResponse = {
+  id: number
+  message?: string
+}
 
-export type EditProductPayload = Partial<CreateProductPayload> & {}
+export type CreateProduct = (payload: CreateProductPayload) => Promise<CreateProductResponse>
 
-export type EditProduct = (id: number, payload: EditProductPayload) => Promise<any>
+export type EditProductPayload = Partial<CreateProductPayload> & {
+  brand_id?: number
+  color_id?: number | null
+  amount_id?: number | null
+}
 
-export type DeleteProduct = (id: number) => Promise<any>
+export type EditProductResponse = {
+  id: number
+  message?: string
+}
+
+export type EditProduct = (id: number, payload: EditProductPayload) => Promise<EditProductResponse>
+
+export type DeleteProductResponse = {
+  message?: string
+}
+
+export type DeleteProduct = (id: number) => Promise<DeleteProductResponse>
 
 export type GetPriceRangeFilter = {
   category_id?: string | number | null
   search?: string | null
 }
 
-export type GetPriceRange = (filter: GetPriceRangeFilter) => Promise<any>
+export type GetPriceRange = (filter: GetPriceRangeFilter) => Promise<PriceRange>
 
 export type PriceRange = { min: number, max: number }
 

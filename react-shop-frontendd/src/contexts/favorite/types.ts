@@ -12,9 +12,14 @@ export type AddToFavoritePayload = {
   product_id: number
 }
 
-export type AddToFavorite = (payload: AddToFavoritePayload) => Promise<any>
+export type AddToFavoriteResponse = {
+  favorite: Favorite
+  message?: string
+}
 
-export type GetFavoriteProducts = (user_id: number) => Promise<any>
+export type AddToFavorite = (payload: AddToFavoritePayload) => Promise<AddToFavoriteResponse>
+
+export type GetFavoriteProducts = (user_id: number) => Promise<Favorite[]>
 
 // export type DeleteFromFavorite = (id: number) => Promise<any>
 

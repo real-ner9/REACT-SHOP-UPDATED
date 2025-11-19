@@ -34,11 +34,17 @@ export type AddToCartPayload = {
   count: number
 }
 
-export type GetCartItems = (user_id: number) => Promise<any>
+export type GetCartItems = (user_id: number) => Promise<Cart>
 
-export type AddToCart = (payload: AddToCartPayload) => Promise<any>
+export type AddToCartResponse = Cart
 
-export type DeleteFromCart = (id: number) => Promise<any>
+export type AddToCart = (payload: AddToCartPayload) => Promise<AddToCartResponse>
+
+export type DeleteFromCartResponse = {
+  message?: string
+}
+
+export type DeleteFromCart = (id: number) => Promise<DeleteFromCartResponse>
 
 export type AddToLocalCartPayload = {
   product: Product

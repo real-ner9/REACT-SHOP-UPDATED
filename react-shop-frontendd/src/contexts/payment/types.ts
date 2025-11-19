@@ -10,7 +10,7 @@ export type CreatePaymentPayload = {
   description: string
 }
 
-export type CreatePayment = (payload: CreatePaymentPayload) => Promise<any>
+export type CreatePayment = (payload: CreatePaymentPayload) => Promise<Payment>
 
 export type PaymentContextProps = {
   createPayment: CreatePayment

@@ -14,9 +14,18 @@ export type CreateFilesPayload = {
   key: string
 }
 
-export type CreateFiles = (payload: CreateFilesPayload) => Promise<any>
+export type CreateFilesResponse = {
+  files: LocalFile[]
+  message?: string
+}
 
-export type DeleteFile = (id: number) => Promise<any>
+export type CreateFiles = (payload: CreateFilesPayload) => Promise<CreateFilesResponse>
+
+export type DeleteFileResponse = {
+  message?: string
+}
+
+export type DeleteFile = (id: number) => Promise<DeleteFileResponse>
 
 export type FilesContextProps = {
   deleteFile: DeleteFile

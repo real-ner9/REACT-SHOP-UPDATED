@@ -5,7 +5,6 @@ import Spinner from '../../components/Spinner/Spinner'
 import './styles.scss'
 import { useSearchParams } from 'react-router-dom'
 import type { Product, ProductsFilter, ProductsMeta, ProductsParams } from '../../contexts/products/types';
-import { productsUrl } from '../../env'
 import ProductsPagination from '../../components/ProductsPagination/ProductsPagination'
 import { Typography } from '@mui/material'
 import { sortVariables } from '../../components/FormInputs/Select/variables'
@@ -35,7 +34,6 @@ const ProductsPage: React.FC<Props> = ({ ProductItem, Filters, CreateProduct }) 
       limit: searchParams.get('limit'),
       page: searchParams.get('page'),
       sortBy: sort ? sortVariables[sort as keyof SelectVariables] : null,
-      route: productsUrl,
     }
 
     const price_min = formatArrayFromUrl(searchParams.get('price'))?.[0].toString()

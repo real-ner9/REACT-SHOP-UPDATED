@@ -1,7 +1,9 @@
-import { type AxiosError, isAxiosError } from 'axios'
+import { handleError } from '../../utils/errorHandler'
 
-export const formatError = (error: AxiosError): string | undefined => {
-  if (isAxiosError(error)) {
-    return error.response?.data.message.join(', ') as string
-  }
+/**
+ * @deprecated Use handleError from utils/errorHandler instead
+ * This function is kept for backward compatibility
+ */
+export const formatError = (error: unknown): string => {
+  return handleError(error)
 }

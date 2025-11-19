@@ -7,7 +7,7 @@ export type GetBrandsFilter = {
   category_id?: string | number | null
 }
 
-export type GetBrands = (filter?: GetBrandsFilter) => Promise<any>
+export type GetBrands = (filter?: GetBrandsFilter) => Promise<Brand[]>
 
 export type CreateBrandPayload = BaseFilterPayload & {
   category_ids: number[]
@@ -15,9 +15,19 @@ export type CreateBrandPayload = BaseFilterPayload & {
 
 export type EditBrandPayload = Partial<CreateBrandPayload>
 
-export type CreateBrand = (payload: CreateBrandPayload) => Promise<any>
+export type CreateBrandResponse = {
+  brand: Brand
+  message?: string
+}
 
-export type EditBrand = (id: number, payload: EditBrandPayload) => Promise<any>
+export type CreateBrand = (payload: CreateBrandPayload) => Promise<CreateBrandResponse>
+
+export type EditBrandResponse = {
+  brand: Brand
+  message?: string
+}
+
+export type EditBrand = (id: number, payload: EditBrandPayload) => Promise<EditBrandResponse>
 
 export type BrandsContextProps = {
   getBrands: GetBrands

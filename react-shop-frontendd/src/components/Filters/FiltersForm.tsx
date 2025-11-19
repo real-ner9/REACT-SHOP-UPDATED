@@ -45,7 +45,7 @@ const FiltersForm: React.FC<Props> = ({ mobile = false, handleClose }) => {
 
 	const onSubmitHandler: SubmitHandler<FiltersInput> = (data) => {
 		Object.keys(data).forEach((key) => {
-			const value = data[key as keyof FiltersInput] as any;
+			const value = data[key as keyof FiltersInput];
 
 			if (
 				(typeof value === "string" && value) ||
@@ -80,11 +80,15 @@ const FiltersForm: React.FC<Props> = ({ mobile = false, handleClose }) => {
 	};
 
 	useEffect(() => {
-		// @ts-ignore
-		const subscription = watch(handleSubmit(onSubmitHandler));
-		// @ts-ignore
-		return () => subscription.unsubscribe();
-	}, [handleSubmit, watch]);
+		const subscription = watch((value, { name }) => {
+			if (name) {
+				handleSubmit(onSubmitHandler)();
+			}
+		});
+		return () => {
+			subscription.unsubscribe();
+		};
+	}, [handleSubmit, watch, onSubmitHandler]);
 
 	return (
 		<Paper

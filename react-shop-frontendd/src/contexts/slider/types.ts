@@ -4,20 +4,34 @@ export type Slide = {
   img_id: number;
 }
 
-export type GetSlides = () => Promise<any>
+export type GetSlides = () => Promise<Slide[]>
 
 export type CreateSlidePayload = {
   link?: string;
   img_id: number
 }
 
-export type CreateSlide = (payload: CreateSlidePayload) => Promise<any>
+export type CreateSlideResponse = {
+  slide: Slide
+  message?: string
+}
+
+export type CreateSlide = (payload: CreateSlidePayload) => Promise<CreateSlideResponse>
 
 export type EditSlidePayload = Partial<CreateSlidePayload>
 
-export type EditSlide = (id: number, payload: EditSlidePayload) => Promise<any>
+export type EditSlideResponse = {
+  slide: Slide
+  message?: string
+}
 
-export type DeleteSlide = (id: number) => Promise<any>
+export type EditSlide = (id: number, payload: EditSlidePayload) => Promise<EditSlideResponse>
+
+export type DeleteSlideResponse = {
+  message?: string
+}
+
+export type DeleteSlide = (id: number) => Promise<DeleteSlideResponse>
 
 export type SliderContextProps = {
   slides: Slide[]

@@ -42,7 +42,12 @@ export type CreateOrderPayload = {
   cart: CartItem[]
 }
 
-export type CreateOrder = (payload: CreateOrderPayload) => Promise<any>
+export type CreateOrderResponse = {
+  order: Order
+  message?: string
+}
+
+export type CreateOrder = (payload: CreateOrderPayload) => Promise<CreateOrderResponse>
 
 export type GetOrders = (user_id: number) => Promise<Order[]>
 

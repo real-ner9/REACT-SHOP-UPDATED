@@ -7,7 +7,7 @@ export type GetAmountsFilter = {
   category_id?: string | number | null
 }
 
-export type GetAmounts = (filter?: GetAmountsFilter) => Promise<any>
+export type GetAmounts = (filter?: GetAmountsFilter) => Promise<Amount[]>
 
 export type CreateAmountPayload = BaseFilterPayload & {
   category_ids: number[]
@@ -15,9 +15,19 @@ export type CreateAmountPayload = BaseFilterPayload & {
 
 export type EditAmountPayload = Partial<CreateAmountPayload>
 
-export type CreateAmount = (payload: CreateAmountPayload) => Promise<any>
+export type CreateAmountResponse = {
+  amount: Amount
+  message?: string
+}
 
-export type EditAmount = (id: number, payload: EditAmountPayload) => Promise<any>
+export type CreateAmount = (payload: CreateAmountPayload) => Promise<CreateAmountResponse>
+
+export type EditAmountResponse = {
+  amount: Amount
+  message?: string
+}
+
+export type EditAmount = (id: number, payload: EditAmountPayload) => Promise<EditAmountResponse>
 
 export type AmountsContextProps = {
   getAmounts: GetAmounts
